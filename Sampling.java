@@ -8,15 +8,13 @@ public class Sampling {
 	static List<Integer> population = new ArrayList<Integer>(10_000_000);
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
 		population = new ArrayList<Integer>(10_000_000);
-		int numA = (int) (10_000_000 * .52);
+		int numA = (int) (10_000_000 * .52); //part B - 52% vote A
 		for (int i = 0; i < 10_000_000; i++) {
 			if (i < numA)
-				population.add(1); // 0=A
+				population.add(1); // 1=A
 			else
-				population.add(0); // 1=B
+				population.add(0); // 0=B
 		}
 
 		double sample = 0;
@@ -24,7 +22,7 @@ public class Sampling {
 		for (int i = 0; i < timesToLoop; i++) {
 			double result = 0;
 			double n = 400;
-			while (result < 0.9) {
+			while (result < 0.9) { //For part b and c - what sample size is the prob A is majority is 0.9?
 				result = getSamples(n);
 				n += 1;
 			}
@@ -39,20 +37,18 @@ public class Sampling {
 	public static double getSamples(double sampleSize) {
 		Random rand = new Random();
 		double majority = 0;
-		for (int timesToLoop = 0; timesToLoop < 100; timesToLoop++) {
+		for (int timesToLoop = 0; timesToLoop < 100; timesToLoop++) { //perform sample 100 times for better estimation
 			double count = 0;
 			for (int i = 0; i < sampleSize; i++) {
 				int index = rand.nextInt(population.size());
 				if (population.get(index) == 1)
 					count++;
 			}
-			// System.out.println(count/sampleSize);
 			if (count > sampleSize / 2)
 				majority++;
 
 		}
 
-		//System.out.println("For sample size " + sampleSize + " A was a majority " + majority / 100 + " times.");
 		return majority / 100;
 	}
 }
